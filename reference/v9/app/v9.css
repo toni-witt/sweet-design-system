@@ -1,0 +1,3265 @@
+/**
+ * design-kit/tokens.css + design-kit/components.css, verbatim except that the
+ * `:root` block and every selector are scoped under `.s9-root` so this
+ * version can live in the same app as the current design without the two sets
+ * of globals fighting. The `body { … }` rule from tokens.css is dropped for the
+ * same reason — `.s9-root` paints the ground instead.
+ *
+ * Component rules match `:is(.s9-root, .s9-root-portal)` because dialogs
+ * portal to <body>, outside the page tree — the portal root carries its own
+ * copy of the tokens further down.
+ */
+
+.s9-root {
+  /* ------------------------------------------------------------------ brand */
+  --sweet-ink: #081526;
+  --sweet-primary: #1e376b;
+  --sweet-primary-soft: #24467f;
+  --sweet-accent: #4f8fd9;
+  --sweet-accent-light: #9ec5f0;
+
+  /* --------------------------------------------------------------- surfaces */
+  --sweet-bg: #f3f5f9;
+  --sweet-surface: #ffffff;
+  --sweet-surface-strong: #ffffff;
+
+  /* ------------------------------------------------------------------- text */
+  --sweet-text: #0f172a;
+  --sweet-text-muted: #64748b;
+
+  /* ------------------------------------------------------------------ lines */
+  --sweet-border: rgba(15, 23, 42, 0.09);
+  --sweet-border-strong: rgba(15, 23, 42, 0.14);
+  --sweet-divider: #e9edf3;
+
+  /* ---------------------------------------------------------------- shadows */
+  --sweet-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --sweet-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 14px 32px rgba(15, 23, 42, 0.07);
+  --sweet-shadow-lg: 0 24px 56px rgba(8, 21, 38, 0.16);
+  --sweet-shadow-button: 0 1px 2px rgba(8, 21, 38, 0.2), 0 8px 20px rgba(15, 23, 42, 0.16);
+  --sweet-shadow-button-hover: 0 1px 2px rgba(8, 21, 38, 0.2), 0 10px 24px rgba(15, 23, 42, 0.2);
+
+  /* ------------------------------------------------------------------ shape */
+  --sweet-radius: 16px;
+  --sweet-radius-sm: 10px;
+
+  /* ----------------------------------------------------------------- motion */
+  --sweet-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --sweet-transition: 160ms var(--sweet-ease);
+
+  /* ----------------------------------------------------------------- status */
+  --sweet-success: #15803d;
+  --sweet-success-bg: rgba(34, 197, 94, 0.12);
+  --sweet-danger: #b91c1c;
+  --sweet-danger-bg: rgba(220, 38, 38, 0.1);
+  --sweet-warning: #b45309;
+  --sweet-warning-dot: #f59e0b;
+  --sweet-neutral: #475569;
+  --sweet-neutral-bg: rgba(100, 116, 139, 0.12);
+
+  /* The kit's stack starts with Inter but never loads it; see README. This
+     project doesn't load Inter either, so it is dropped rather than declared
+     and silently unresolved. */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--sweet-text);
+  background: var(--sweet-bg);
+  min-height: 100dvh;
+}
+
+.s9-root ::selection {
+  background: rgba(30, 55, 107, 0.22);
+}
+
+/* ================================================================= buttons = */
+
+:is(.s9-root, .s9-root-portal) .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: var(--sweet-radius-sm);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--sweet-transition),
+    box-shadow var(--sweet-transition),
+    background-color var(--sweet-transition),
+    border-color var(--sweet-transition),
+    color var(--sweet-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .button:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+  :is(.s9-root, .s9-root-portal) .button-primary:hover:not(:disabled) {
+    background: var(--sweet-primary-soft);
+    box-shadow: var(--sweet-shadow-button-hover);
+  }
+  :is(.s9-root, .s9-root-portal) .button-secondary:hover:not(:disabled) {
+    background: var(--sweet-bg);
+    border-color: var(--sweet-primary-soft);
+  }
+  :is(.s9-root, .s9-root-portal) .button-danger:hover:not(:disabled) {
+    background: var(--sweet-danger-bg);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .button:active:not(:disabled) {
+  transform: translateY(0) scale(0.985);
+}
+
+:is(.s9-root, .s9-root-portal) .button:focus-visible {
+  outline: 2px solid var(--sweet-accent);
+  outline-offset: 2px;
+}
+
+:is(.s9-root, .s9-root-portal) .button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+:is(.s9-root, .s9-root-portal) .button-primary {
+  background: var(--sweet-primary);
+  color: #ffffff;
+  box-shadow: var(--sweet-shadow-button);
+}
+
+:is(.s9-root, .s9-root-portal) .button-secondary {
+  background: var(--sweet-surface);
+  color: var(--sweet-primary);
+  border-color: var(--sweet-border-strong);
+}
+
+:is(.s9-root, .s9-root-portal) .button-danger {
+  background: var(--sweet-surface);
+  color: var(--sweet-danger);
+  border-color: rgba(220, 38, 38, 0.28);
+}
+
+:is(.s9-root, .s9-root-portal) .button-small {
+  min-height: 32px;
+  padding: 0 14px;
+  font-size: 0.78125rem;
+}
+
+/* Icon-only chrome button — a size variant of the secondary, not a new colour. */
+:is(.s9-root, .s9-root-portal) .button-icon {
+  min-height: 38px;
+  width: 38px;
+  padding: 0;
+  color: var(--sweet-text-muted);
+}
+
+/* =================================================================== cards = */
+
+:is(.s9-root, .s9-root-portal) .card {
+  padding: 20px;
+  border: 1px solid var(--sweet-border);
+  border-radius: var(--sweet-radius);
+  background: var(--sweet-surface);
+  box-shadow: var(--sweet-shadow-sm);
+}
+
+:is(.s9-root, .s9-root-portal) .card-raised {
+  box-shadow: var(--sweet-shadow);
+}
+
+:is(.s9-root, .s9-root-portal) .card-flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ---- the divided stat row ------------------------------------------------ */
+
+:is(.s9-root, .s9-root-portal) .stat-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--sweet-border);
+  border-radius: 14px;
+  background: var(--sweet-divider);
+  box-shadow: var(--sweet-shadow-sm);
+}
+
+:is(.s9-root, .s9-root-portal) .stat-cell {
+  display: grid;
+  gap: 7px;
+  align-content: start;
+  padding: 18px 20px 20px;
+  background: var(--sweet-surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+:is(.s9-root, .s9-root-portal) .stat-label {
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+  font-weight: 500;
+}
+
+:is(.s9-root, .s9-root-portal) .stat-value {
+  color: var(--sweet-ink);
+  font-size: 1.625rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.s9-root, .s9-root-portal) .stat-caption {
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 720px) {
+  :is(.s9-root, .s9-root-portal) .stat-row {
+    grid-auto-flow: row;
+  }
+}
+
+/* ============================================================ status pills = */
+
+:is(.s9-root, .s9-root-portal) .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+:is(.s9-root, .s9-root-portal) .pill::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: currentColor;
+  flex: none;
+}
+
+:is(.s9-root, .s9-root-portal) .pill-success {
+  background: var(--sweet-success-bg);
+  color: var(--sweet-success);
+}
+
+:is(.s9-root, .s9-root-portal) .pill-danger {
+  background: var(--sweet-danger-bg);
+  color: var(--sweet-danger);
+}
+
+:is(.s9-root, .s9-root-portal) .pill-neutral {
+  background: var(--sweet-neutral-bg);
+  color: var(--sweet-neutral);
+}
+
+/* Warning is a text colour plus an amber dot, not a filled amber tile. */
+:is(.s9-root, .s9-root-portal) .pill-warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--sweet-warning);
+}
+:is(.s9-root, .s9-root-portal) .pill-warning::before {
+  background: var(--sweet-warning-dot);
+}
+
+:is(.s9-root, .s9-root-portal) .pill-accent {
+  background: rgba(30, 55, 107, 0.14);
+  color: var(--sweet-primary);
+}
+
+:is(.s9-root, .s9-root-portal) .pill-pulse::before {
+  animation: sweet-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes sweet-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ================================================================== inputs = */
+
+:is(.s9-root, .s9-root-portal) .input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--sweet-border-strong);
+  border-radius: var(--sweet-radius-sm);
+  background: var(--sweet-surface);
+  color: var(--sweet-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  transition:
+    border-color var(--sweet-transition),
+    box-shadow var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .input::placeholder {
+  color: var(--sweet-text-muted);
+}
+
+:is(.s9-root, .s9-root-portal) .input:focus {
+  outline: none;
+  border-color: var(--sweet-accent);
+  box-shadow: 0 0 0 3px rgba(30, 55, 107, 0.16);
+}
+
+/* ====================================================== ambient background = */
+
+:is(.s9-root, .s9-root-portal) .app-ground {
+  position: relative;
+  isolation: isolate;
+  /* Kit says `overflow: hidden`. Changed to `clip`: `hidden` makes this a
+     scroll container, which silently kills `position: sticky` on the rail and
+     the top bar. `clip` still trims the orbs but creates no scroll container.
+     Worth pushing back into components.css. */
+  overflow: clip;
+  background: linear-gradient(180deg, #f7f9fc 0%, #f1f4f9 48%, #eef2f7 100%);
+}
+
+:is(.s9-root, .s9-root-portal) .app-ground-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+:is(.s9-root, .s9-root-portal) .app-ground-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(56px);
+}
+
+:is(.s9-root, .s9-root-portal) .app-ground-orb-a {
+  top: -12%;
+  left: 8%;
+  width: min(46vw, 520px);
+  height: min(46vw, 520px);
+  background: radial-gradient(circle, rgba(120, 170, 225, 0.22) 0%, rgba(120, 170, 225, 0) 70%);
+}
+
+:is(.s9-root, .s9-root-portal) .app-ground-orb-b {
+  top: 18%;
+  right: -8%;
+  width: min(40vw, 460px);
+  height: min(40vw, 460px);
+  background: radial-gradient(circle, rgba(158, 197, 240, 0.26) 0%, rgba(158, 197, 240, 0) 72%);
+}
+
+:is(.s9-root, .s9-root-portal) .app-ground-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -5%, rgba(255, 255, 255, 0.75), transparent 60%),
+    radial-gradient(circle at 1px 1px, rgba(30, 55, 107, 0.035) 1px, transparent 0);
+  background-size: auto, 28px 28px;
+  mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+}
+
+:is(.s9-root, .s9-root-portal) .app-ground-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =================================================== layout for this screen = */
+
+:is(.s9-root, .s9-root-portal) .shell {
+  display: flex;
+  min-height: 100dvh;
+}
+
+:is(.s9-root, .s9-root-portal) .rail {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  height: 100dvh;
+  width: 236px;
+  flex: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 14px 14px;
+  border-right: 1px solid var(--sweet-border);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  transition: width 200ms var(--sweet-ease);
+}
+
+:is(.s9-root, .s9-root-portal) .rail[data-collapsed] {
+  width: 70px;
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 40px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: var(--sweet-radius-sm);
+  color: var(--sweet-text-muted);
+  font-size: 0.84375rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color var(--sweet-transition),
+    color var(--sweet-transition),
+    transform var(--sweet-transition),
+    border-color var(--sweet-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .rail-link:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--sweet-border);
+    color: var(--sweet-text);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link:active {
+  transform: scale(0.985);
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link[aria-current="page"] {
+  background: var(--sweet-primary);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: var(--sweet-shadow-button);
+  font-weight: 600;
+}
+
+:is(.s9-root, .s9-root-portal) .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 56px;
+  border-bottom: 1px solid var(--sweet-border);
+  background: rgba(247, 249, 252, 0.78);
+  backdrop-filter: blur(12px);
+}
+
+:is(.s9-root, .s9-root-portal) .page {
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 32px 56px 96px;
+}
+
+:is(.s9-root, .s9-root-portal) .page-title {
+  margin: 0;
+  color: var(--sweet-ink);
+  font-size: 1.625rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+}
+
+:is(.s9-root, .s9-root-portal) .page-lede {
+  margin: 8px 0 0;
+  max-width: 62ch;
+  color: var(--sweet-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+:is(.s9-root, .s9-root-portal) .section-title {
+  margin: 0;
+  color: var(--sweet-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ---- connection rows ----------------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .conn-head,
+:is(.s9-root, .s9-root-portal) .conn-row {
+  display: grid;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  grid-template-columns: minmax(0, 0.95fr) 132px minmax(0, 1.15fr) 60px 88px 64px 96px 104px;
+}
+
+:is(.s9-root, .s9-root-portal) .conn-head {
+  min-height: 40px;
+  border-bottom: 1px solid var(--sweet-border);
+  background: rgba(233, 237, 243, 0.5);
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+  font-weight: 500;
+}
+
+:is(.s9-root, .s9-root-portal) .conn-row {
+  position: relative;
+  min-height: 62px;
+  border-bottom: 1px solid var(--sweet-border);
+  transition: background-color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .conn-row:last-of-type {
+  border-bottom: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .conn-row:hover {
+    background: rgba(243, 245, 249, 0.7);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .conn-rail {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 3px;
+}
+
+:is(.s9-root, .s9-root-portal) .num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1200px) {
+  :is(.s9-root, .s9-root-portal) .conn-head,
+  :is(.s9-root, .s9-root-portal) .conn-row {
+    grid-template-columns: minmax(0, 1fr) 132px 60px 88px 104px;
+  }
+  :is(.s9-root, .s9-root-portal) .col-detail,
+  :is(.s9-root, .s9-root-portal) .col-p95,
+  :is(.s9-root, .s9-root-portal) .col-sync {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  :is(.s9-root, .s9-root-portal) .topbar,
+  :is(.s9-root, .s9-root-portal) .page {
+    padding-inline: 24px;
+  }
+  :is(.s9-root, .s9-root-portal) .conn-head,
+  :is(.s9-root, .s9-root-portal) .conn-row {
+    grid-template-columns: minmax(0, 1fr) 132px 104px;
+  }
+  :is(.s9-root, .s9-root-portal) .col-tools,
+  :is(.s9-root, .s9-root-portal) .col-calls {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ motion - */
+/* Entrances start at opacity 0 + 6px, never scale(0). Stagger 40ms per item. */
+
+@keyframes sweet-enter {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .enter {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: sweet-enter 280ms var(--sweet-ease) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.s9-root, .s9-root-portal) .enter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  :is(.s9-root, .s9-root-portal) .button:hover:not(:disabled),
+  :is(.s9-root, .s9-root-portal) .button:active:not(:disabled),
+  :is(.s9-root, .s9-root-portal) .rail-link:active {
+    transform: none;
+  }
+  :is(.s9-root, .s9-root-portal) .pill-pulse::before {
+    animation: none;
+  }
+  .s9-root *,
+  .s9-root *::before,
+  .s9-root *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================ additions for this screen only =
+   Patterns the kit doesn't cover yet, built from its own tokens rather than
+   invented values. Candidates to fold back into components.css. */
+
+/* Filter chips. Deliberately not buttons — DESIGN.md allows one primary per
+   view, and a row of filters is not it. */
+:is(.s9-root, .s9-root-portal) .chip {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: var(--sweet-radius-sm);
+  background: transparent;
+  color: var(--sweet-text-muted);
+  font-family: inherit;
+  font-size: 0.78125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--sweet-transition),
+    border-color var(--sweet-transition),
+    color var(--sweet-transition),
+    transform var(--sweet-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .chip:hover {
+    color: var(--sweet-text);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .chip:active {
+  transform: scale(0.985);
+}
+
+:is(.s9-root, .s9-root-portal) .chip[aria-pressed="true"] {
+  background: var(--sweet-surface);
+  border-color: var(--sweet-border-strong);
+  color: var(--sweet-primary);
+  font-weight: 600;
+}
+
+/* App monogram tile. Stand-in for a connector icon. */
+:is(.s9-root, .s9-root-portal) .mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  border-radius: 9px;
+  color: #ffffff;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+:is(.s9-root, .s9-root-portal) .mark-md {
+  width: 34px;
+  height: 34px;
+}
+
+:is(.s9-root, .s9-root-portal) .mark-sm {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  font-size: 0.5625rem;
+}
+
+:is(.s9-root, .s9-root-portal) .avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--sweet-primary);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+:is(.s9-root, .s9-root-portal) .rail-badge {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.16);
+  color: var(--sweet-warning);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link[aria-current="page"] .rail-badge {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+:is(.s9-root, .s9-root-portal) .input-small {
+  min-height: 40px;
+  font-size: 0.84375rem;
+}
+
+:is(.s9-root, .s9-root-portal) .kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--sweet-border);
+  border-radius: 6px;
+  background: var(--sweet-bg);
+  color: var(--sweet-text-muted);
+  font-family: inherit;
+  font-size: 0.6875rem;
+}
+
+:is(.s9-root, .s9-root-portal) .fade {
+  color: var(--sweet-text-muted);
+}
+
+:is(.s9-root, .s9-root-portal) .strong {
+  color: var(--sweet-ink);
+  font-weight: 600;
+}
+
+/* Collapsed rail: centre the glyphs rather than leaving them on the label's
+   left inset. */
+:is(.s9-root, .s9-root-portal) .rail[data-collapsed] .rail-link {
+  justify-content: center;
+  padding: 0;
+}
+
+/* ================================================== connect palette (⌘K) ==
+   DESIGN.md: keyboard-triggered surfaces do not animate. This opens and closes
+   with no transition on purpose — the backdrop included. */
+
+.s9-root-portal .palette-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(8, 21, 38, 0.28);
+  backdrop-filter: blur(2px);
+}
+
+.s9-root-portal .palette {
+  position: fixed;
+  left: 50%;
+  top: 12vh;
+  z-index: 60;
+  width: min(94vw, 640px);
+  transform: translateX(-50%);
+  overflow: hidden;
+  border: 1px solid var(--sweet-border);
+  border-radius: var(--sweet-radius);
+  background: var(--sweet-surface);
+  box-shadow: var(--sweet-shadow-lg);
+  outline: none;
+}
+
+.s9-root-portal .palette-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--sweet-border);
+  color: var(--sweet-text-muted);
+}
+
+.s9-root-portal .palette-search input {
+  flex: 1;
+  min-width: 0;
+  height: 56px;
+  border: 0;
+  background: none;
+  color: var(--sweet-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.s9-root-portal .palette-search input::placeholder {
+  color: var(--sweet-text-muted);
+}
+
+.s9-root-portal .palette-list {
+  max-height: 46vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px;
+}
+
+.s9-root-portal [cmdk-group-heading] {
+  padding: 8px 10px 4px;
+  color: var(--sweet-text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+@keyframes sweet-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.s9-root-portal .palette-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: var(--sweet-radius-sm);
+  cursor: pointer;
+}
+
+.s9-root-portal .palette-item[data-selected="true"] {
+  background: rgba(30, 55, 107, 0.1);
+}
+
+.s9-root-portal .palette-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--sweet-border);
+  background: rgba(243, 245, 249, 0.6);
+}
+
+.s9-root-portal .check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  border: 1px solid var(--sweet-border-strong);
+  border-radius: 6px;
+  color: transparent;
+  transition:
+    background-color var(--sweet-transition),
+    border-color var(--sweet-transition);
+}
+
+.s9-root-portal .check[data-on] {
+  border-color: transparent;
+  background: var(--sweet-primary);
+  color: #ffffff;
+}
+
+/* Portal content lives outside .s9-root, so it carries the tokens itself. */
+.s9-root-portal {
+  --sweet-ink: #081526;
+  --sweet-primary: #1e376b;
+  --sweet-primary-soft: #24467f;
+  --sweet-accent: #4f8fd9;
+  --sweet-bg: #f3f5f9;
+  --sweet-surface: #ffffff;
+  --sweet-text: #0f172a;
+  --sweet-text-muted: #64748b;
+  --sweet-border: rgba(15, 23, 42, 0.09);
+  --sweet-border-strong: rgba(15, 23, 42, 0.14);
+  --sweet-divider: #e9edf3;
+  --sweet-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --sweet-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 14px 32px rgba(15, 23, 42, 0.07);
+  --sweet-shadow-lg: 0 24px 56px rgba(8, 21, 38, 0.16);
+  --sweet-shadow-button: 0 1px 2px rgba(8, 21, 38, 0.2), 0 8px 20px rgba(15, 23, 42, 0.16);
+  --sweet-shadow-button-hover: 0 1px 2px rgba(8, 21, 38, 0.2), 0 10px 24px rgba(15, 23, 42, 0.2);
+  --sweet-radius: 16px;
+  --sweet-radius-sm: 10px;
+  --sweet-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --sweet-transition: 160ms var(--sweet-ease);
+  --sweet-success: #15803d;
+  --sweet-success-bg: rgba(34, 197, 94, 0.12);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--sweet-text);
+}
+
+/* ============================================================ key/value rows = */
+
+:is(.s9-root, .s9-root-portal) .kv {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--sweet-border);
+}
+
+:is(.s9-root, .s9-root-portal) .kv:last-child {
+  border-bottom: 0;
+}
+
+:is(.s9-root, .s9-root-portal) .kv-key {
+  width: 108px;
+  flex: none;
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+}
+
+:is(.s9-root, .s9-root-portal) .kv-value {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78125rem;
+  color: var(--sweet-ink);
+}
+
+:is(.s9-root, .s9-root-portal) .card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--sweet-border);
+}
+
+:is(.s9-root, .s9-root-portal) .code {
+  margin: 0;
+  overflow-x: auto;
+  padding: 16px 20px;
+  font-size: 0.78125rem;
+  line-height: 1.6;
+}
+
+:is(.s9-root, .s9-root-portal) .code .shiki {
+  background: transparent !important;
+}
+
+:is(.s9-root, .s9-root-portal) .tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 7px;
+  background: var(--sweet-neutral-bg);
+  color: var(--sweet-neutral);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+/* ================================================================ microsites = */
+
+:is(.s9-root, .s9-root-portal) .site-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+:is(.s9-root, .s9-root-portal) .site-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  transition:
+    transform var(--sweet-transition),
+    box-shadow var(--sweet-transition),
+    border-color var(--sweet-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .site-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--sweet-shadow);
+    border-color: var(--sweet-border-strong);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .site-plate {
+  position: relative;
+  height: 116px;
+  overflow: hidden;
+}
+
+:is(.s9-root, .s9-root-portal) .site-chrome {
+  position: absolute;
+  inset: 16px 18px 0;
+  border-radius: 10px 10px 0 0;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 9px 10px;
+}
+
+:is(.s9-root, .s9-root-portal) .site-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 46px;
+  margin-top: 9px;
+}
+
+:is(.s9-root, .s9-root-portal) .site-bar {
+  flex: 1;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+:is(.s9-root, .s9-root-portal) .site-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px 18px 18px;
+}
+
+/* ================================================================= audit log = */
+
+:is(.s9-root, .s9-root-portal) .audit-head,
+:is(.s9-root, .s9-root-portal) .audit-row {
+  display: grid;
+  align-items: center;
+  gap: 14px;
+  padding: 0 20px;
+  grid-template-columns: 74px 104px 132px minmax(0, 1fr) 74px 88px 78px;
+}
+
+:is(.s9-root, .s9-root-portal) .audit-head {
+  min-height: 40px;
+  border-bottom: 1px solid var(--sweet-border);
+  background: rgba(233, 237, 243, 0.5);
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+  font-weight: 500;
+}
+
+:is(.s9-root, .s9-root-portal) .audit-row {
+  min-height: 52px;
+  border-bottom: 1px solid var(--sweet-border);
+  font-size: 0.78125rem;
+  transition: background-color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .audit-row:last-of-type {
+  border-bottom: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .audit-row:hover {
+    background: rgba(243, 245, 249, 0.7);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1100px) {
+  :is(.s9-root, .s9-root-portal) .audit-head,
+  :is(.s9-root, .s9-root-portal) .audit-row {
+    grid-template-columns: 74px 132px minmax(0, 1fr) 88px;
+  }
+  :is(.s9-root, .s9-root-portal) .col-kind,
+  :is(.s9-root, .s9-root-portal) .col-took,
+  :is(.s9-root, .s9-root-portal) .col-hash {
+    display: none;
+  }
+}
+
+/* ================================================================== settings = */
+
+:is(.s9-root, .s9-root-portal) .setting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--sweet-border);
+}
+
+:is(.s9-root, .s9-root-portal) .setting:last-child {
+  border-bottom: 0;
+}
+
+:is(.s9-root, .s9-root-portal) .setting-label {
+  margin: 0;
+  color: var(--sweet-ink);
+  font-size: 0.84375rem;
+  font-weight: 600;
+}
+
+:is(.s9-root, .s9-root-portal) .setting-hint {
+  margin: 3px 0 0;
+  max-width: 64ch;
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+  line-height: 1.5;
+}
+
+:is(.s9-root, .s9-root-portal) .switch {
+  position: relative;
+  width: 40px;
+  height: 23px;
+  flex: none;
+  border: 1px solid var(--sweet-border-strong);
+  border-radius: 999px;
+  background: var(--sweet-neutral-bg);
+  cursor: pointer;
+  transition:
+    background-color var(--sweet-transition),
+    border-color var(--sweet-transition),
+    transform var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .switch[data-checked] {
+  border-color: transparent;
+  background: var(--sweet-primary);
+}
+
+:is(.s9-root, .s9-root-portal) .switch:active {
+  transform: scale(0.985);
+}
+
+:is(.s9-root, .s9-root-portal) .switch:focus-visible {
+  outline: 2px solid var(--sweet-accent);
+  outline-offset: 2px;
+}
+
+:is(.s9-root, .s9-root-portal) .switch-thumb {
+  display: block;
+  width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  background: var(--sweet-surface);
+  box-shadow: var(--sweet-shadow-sm);
+  transform: translateX(2px);
+  transition: transform var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .switch-thumb[data-checked] {
+  transform: translateX(19px);
+}
+
+:is(.s9-root, .s9-root-portal) .select {
+  min-height: 40px;
+  min-width: 200px;
+  padding: 0 12px;
+  border: 1px solid var(--sweet-border-strong);
+  border-radius: var(--sweet-radius-sm);
+  background: var(--sweet-surface);
+  color: var(--sweet-text);
+  font-family: inherit;
+  font-size: 0.84375rem;
+}
+
+:is(.s9-root, .s9-root-portal) .select:focus {
+  outline: none;
+  border-color: var(--sweet-accent);
+  box-shadow: 0 0 0 3px rgba(30, 55, 107, 0.16);
+}
+
+/* =================================================================== agents = */
+
+:is(.s9-root, .s9-root-portal) .agent-head,
+:is(.s9-root, .s9-root-portal) .agent-row {
+  display: grid;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  grid-template-columns: minmax(0, 1fr) 140px 120px 96px 104px;
+}
+
+:is(.s9-root, .s9-root-portal) .agent-head {
+  min-height: 40px;
+  border-bottom: 1px solid var(--sweet-border);
+  background: rgba(233, 237, 243, 0.5);
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+  font-weight: 500;
+}
+
+:is(.s9-root, .s9-root-portal) .agent-row {
+  min-height: 56px;
+  border-bottom: 1px solid var(--sweet-border);
+  transition: background-color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .agent-row:last-of-type {
+  border-bottom: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .agent-row:hover {
+    background: rgba(243, 245, 249, 0.7);
+  }
+}
+
+@media (max-width: 1000px) {
+  :is(.s9-root, .s9-root-portal) .agent-head,
+  :is(.s9-root, .s9-root-portal) .agent-row {
+    grid-template-columns: minmax(0, 1fr) 104px;
+  }
+  :is(.s9-root, .s9-root-portal) .col-transport,
+  :is(.s9-root, .s9-root-portal) .col-scopes,
+  :is(.s9-root, .s9-root-portal) .col-agent-calls {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Layer 1 — v8's base, inherited unchanged
+   ==========================================================================
+   Same dark blue v7 landed on, taken flat and compact, with v1 (the root
+   domain) as the reference for scale. Layer 2 below is where v9 departs.
+
+   1. One blue, and it is the dark one. `--sweet-accent` is the navy #1e376b —
+      focus, selection, the syncing state and the chart all speak with the
+      primary's voice.
+   2. Nothing is drawn that isn't information. No panel borders, no elevation
+      shadows, no card fills, and no ambient page shading — the orbs, the
+      gradient and the dot grid are all gone. One flat ground, and structure
+      carried by heading, spacing and alignment alone.
+      Two deliberate exceptions in v8, both about legibility rather than
+      decoration (v9 reopens the first of these):
+        · Floating layers (menu, tooltip, preview, palette) keep a fill and a
+          shadow. A popup with neither is unreadable over the content it covers.
+        · Controls (buttons, inputs, chips) keep a soft fill. That is the
+          affordance telling you the thing is pressable — take it away and the
+          screen is a document, not an app.
+   3. v1's scale: 26px titles, 13.5px names, 12.5px cells, 12px meta, 11px
+      column labels, and buttons at 28–32px instead of 44.
+   ========================================================================== */
+
+:is(.s9-root, .s9-root-portal) {
+  --sweet-accent: #1e376b;
+  --sweet-accent-soft: #24467f;
+
+  /* Tint does every job a border or a fill used to do. */
+  --sweet-tint: rgba(30, 55, 107, 0.045);
+  --sweet-tint-strong: rgba(30, 55, 107, 0.075);
+  --sweet-control: rgba(15, 23, 42, 0.05);
+  --sweet-control-hover: rgba(15, 23, 42, 0.08);
+
+  /* One flat ground. No gradient, no orbs, no grid. */
+  --sweet-bg: #fbfbfc;
+  --sweet-surface: #fbfbfc;
+
+  /* Elevation survives only where a layer floats over content. */
+  --sweet-shadow-sm: none;
+  --sweet-shadow: none;
+  --sweet-shadow-button: none;
+  --sweet-shadow-button-hover: none;
+  --sweet-shadow-lg: 0 8px 16px rgba(8, 21, 38, 0.08), 0 24px 48px rgba(8, 21, 38, 0.14);
+
+  --sweet-radius: 12px;
+  --sweet-radius-sm: 9px;
+
+  /* The kit's portal block never carried the status tokens, which silently
+     dropped `color: var(--sweet-danger)` on anything rendered in a popup. */
+  --sweet-danger: #b91c1c;
+  --sweet-danger-bg: rgba(220, 38, 38, 0.1);
+  --sweet-warning: #b45309;
+  --sweet-warning-dot: #f59e0b;
+  --sweet-neutral: #475569;
+  --sweet-neutral-bg: rgba(100, 116, 139, 0.12);
+}
+
+/* ------------------------------------------------------------ flat ground - */
+
+:is(.s9-root, .s9-root-portal) .app-ground {
+  background: var(--sweet-bg);
+}
+
+/* The ambient layer is kept in the markup and switched off here, so the
+   diff against v2 reads as one decision rather than a hunt through the JSX. */
+:is(.s9-root, .s9-root-portal) .app-ground-ambient {
+  display: none;
+}
+
+/* ----------------------------------------------------------- no surfaces - */
+
+:is(.s9-root, .s9-root-portal) .card,
+:is(.s9-root, .s9-root-portal) .card-raised {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .stat-row {
+  gap: 28px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .stat-cell {
+  gap: 5px;
+  padding: 0;
+  background: none;
+}
+
+:is(.s9-root, .s9-root-portal) .stat-value {
+  font-size: 1.625rem;
+  letter-spacing: -0.02em;
+}
+
+/* ---------------------------------------------------------------- chrome - */
+
+:is(.s9-root, .s9-root-portal) .rail {
+  width: 196px;
+  gap: 2px;
+  padding: 14px 10px 12px;
+  border-right: 0;
+  background: none;
+  backdrop-filter: none;
+}
+
+:is(.s9-root, .s9-root-portal) .rail[data-collapsed] {
+  width: 60px;
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link {
+  min-height: 32px;
+  padding: 0 9px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link[aria-current="page"] {
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .rail-badge {
+  font-size: 0.625rem;
+}
+
+:is(.s9-root, .s9-root-portal) .topbar {
+  padding: 9px 24px;
+  border-bottom: 0;
+  background: color-mix(in oklab, var(--sweet-bg) 82%, transparent);
+}
+
+/* v1's column: 1180px, and the page breathes at the top rather than the side. */
+:is(.s9-root, .s9-root-portal) .page {
+  max-width: 1180px;
+  padding: 28px 24px 96px;
+}
+
+:is(.s9-root, .s9-root-portal) .page-title {
+  font-size: 1.625rem;
+  letter-spacing: -0.03em;
+}
+
+:is(.s9-root, .s9-root-portal) .page-lede {
+  margin-top: 5px;
+  max-width: 58ch;
+  font-size: 0.84375rem;
+}
+
+:is(.s9-root, .s9-root-portal) .section-title {
+  font-size: 0.9375rem;
+  letter-spacing: -0.015em;
+}
+
+/* ----------------------------------------------------------------- rows - */
+
+:is(.s9-root, .s9-root-portal) .conn-head,
+:is(.s9-root, .s9-root-portal) .agent-head,
+:is(.s9-root, .s9-root-portal) .audit-head {
+  min-height: 30px;
+  padding-inline: 10px;
+  border-bottom: 0;
+  background: none;
+  font-size: 0.6875rem;
+  letter-spacing: 0.01em;
+}
+
+:is(.s9-root, .s9-root-portal) .conn-row,
+:is(.s9-root, .s9-root-portal) .agent-row,
+:is(.s9-root, .s9-root-portal) .audit-row {
+  min-height: 52px;
+  padding-inline: 10px;
+  border-bottom: 0;
+  border-radius: 9px;
+}
+
+:is(.s9-root, .s9-root-portal) .audit-row {
+  min-height: 40px;
+  font-size: 0.75rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .conn-row:hover,
+  :is(.s9-root, .s9-root-portal) .agent-row:hover,
+  :is(.s9-root, .s9-root-portal) .audit-row:hover {
+    background: var(--sweet-tint);
+  }
+}
+
+/* v1's 2px tick, full height, sitting in the row's left padding. */
+:is(.s9-root, .s9-root-portal) .conn-rail {
+  inset-block: 8px;
+  left: 0;
+  width: 2px;
+  border-radius: 999px;
+}
+
+:is(.s9-root, .s9-root-portal) .kv,
+:is(.s9-root, .s9-root-portal) .setting,
+:is(.s9-root, .s9-root-portal) .card-head {
+  padding-inline: 0;
+  border: 0;
+}
+
+:is(.s9-root, .s9-root-portal) .kv {
+  min-height: 40px;
+}
+
+:is(.s9-root, .s9-root-portal) .setting {
+  padding-block: 12px;
+}
+
+:is(.s9-root, .s9-root-portal) .card-head {
+  padding-block: 0 12px;
+}
+
+/* --------------------------------------------------------------- controls */
+
+:is(.s9-root, .s9-root-portal) .button {
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .button-small {
+  min-height: 26px;
+  padding: 0 10px;
+  font-size: 0.75rem;
+}
+
+:is(.s9-root, .s9-root-portal) .button-icon {
+  min-height: 30px;
+  width: 30px;
+  padding: 0;
+}
+
+:is(.s9-root, .s9-root-portal) .button-primary {
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .button-secondary {
+  border-color: transparent;
+  background: var(--sweet-control);
+  color: var(--sweet-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .button:hover:not(:disabled) {
+    transform: none;
+  }
+  :is(.s9-root, .s9-root-portal) .button-primary:hover:not(:disabled) {
+    background: var(--sweet-primary-soft);
+    box-shadow: none;
+  }
+  :is(.s9-root, .s9-root-portal) .button-secondary:hover:not(:disabled) {
+    background: var(--sweet-control-hover);
+    border-color: transparent;
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .button-danger {
+  border-color: transparent;
+  background: var(--sweet-danger-bg);
+}
+
+:is(.s9-root, .s9-root-portal) .input,
+:is(.s9-root, .s9-root-portal) .select {
+  min-height: 32px;
+  padding: 0 10px;
+  border-color: transparent;
+  border-radius: 8px;
+  background: var(--sweet-control);
+  font-size: 0.8125rem;
+}
+
+:is(.s9-root, .s9-root-portal) .input-small {
+  min-height: 30px;
+  font-size: 0.78125rem;
+}
+
+:is(.s9-root, .s9-root-portal) .input:focus,
+:is(.s9-root, .s9-root-portal) .select:focus {
+  border-color: var(--sweet-accent);
+  background: var(--sweet-surface);
+}
+
+:is(.s9-root, .s9-root-portal) .chip {
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 0.78125rem;
+}
+
+:is(.s9-root, .s9-root-portal) .chip[aria-pressed="true"] {
+  border-color: transparent;
+  background: var(--sweet-control);
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .kbd {
+  border-color: transparent;
+  background: var(--sweet-control);
+  font-size: 0.625rem;
+}
+
+:is(.s9-root, .s9-root-portal) .pill {
+  padding: 2px 8px;
+  font-size: 0.6875rem;
+}
+
+:is(.s9-root, .s9-root-portal) .tag {
+  font-size: 0.625rem;
+}
+
+:is(.s9-root, .s9-root-portal) .mark-md {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+:is(.s9-root, .s9-root-portal) .avatar {
+  width: 26px;
+  height: 26px;
+  font-size: 0.6875rem;
+}
+
+:is(.s9-root, .s9-root-portal) .switch {
+  width: 34px;
+  height: 20px;
+}
+
+:is(.s9-root, .s9-root-portal) .switch-thumb {
+  width: 14px;
+  height: 14px;
+}
+
+:is(.s9-root, .s9-root-portal) .switch-thumb[data-checked] {
+  transform: translateX(16px);
+}
+
+/* ============================================================== additions =
+   Components v2 didn't have. */
+
+/* ---- segmented control --------------------------------------------------
+   v1's version: no track, just a tinted pill that slides under the active
+   label. With no track there is nothing to draw when only one option exists. */
+:is(.s9-root, .s9-root-portal) .seg {
+  display: inline-flex;
+  gap: 2px;
+}
+
+:is(.s9-root, .s9-root-portal) .seg-item {
+  position: relative;
+  min-height: 26px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--sweet-text-muted);
+  font-family: inherit;
+  font-size: 0.78125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .seg-item[data-pressed] {
+  color: var(--sweet-ink);
+  font-weight: 600;
+}
+
+:is(.s9-root, .s9-root-portal) .seg-item:focus-visible {
+  outline: 2px solid var(--sweet-accent);
+  outline-offset: 1px;
+}
+
+:is(.s9-root, .s9-root-portal) .seg-thumb {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: var(--sweet-control);
+}
+
+:is(.s9-root, .s9-root-portal) .seg-label {
+  position: relative;
+}
+
+/* ---- popovers: the only layers that float -------------------------------- */
+
+.s9-root-portal .tip {
+  padding: 4px 8px;
+  border-radius: 7px;
+  background: var(--sweet-ink);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.35;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity 120ms var(--sweet-ease),
+    transform 120ms var(--sweet-ease);
+}
+
+.s9-root-portal .tip[data-starting-style],
+.s9-root-portal .tip[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.s9-root-portal .menu-popup {
+  min-width: 196px;
+  padding: 5px;
+  border-radius: 11px;
+  background: #ffffff;
+  box-shadow: var(--sweet-shadow-lg);
+  outline: none;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity 130ms var(--sweet-ease),
+    transform 130ms var(--sweet-ease);
+}
+
+.s9-root-portal .menu-popup[data-starting-style],
+.s9-root-portal .menu-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.s9-root-portal .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 30px;
+  padding: 0 9px;
+  border-radius: 7px;
+  color: var(--sweet-text);
+  font-size: 0.78125rem;
+  cursor: default;
+  outline: none;
+  user-select: none;
+}
+
+.s9-root-portal .menu-item[data-highlighted] {
+  background: var(--sweet-tint);
+  color: var(--sweet-ink);
+}
+
+.s9-root-portal .menu-item[data-danger] {
+  color: var(--sweet-danger);
+}
+
+.s9-root-portal .menu-item[data-danger][data-highlighted] {
+  background: var(--sweet-danger-bg);
+}
+
+.s9-root-portal .menu-sep {
+  height: 1px;
+  margin: 4px 7px;
+  background: rgba(15, 23, 42, 0.07);
+}
+
+.s9-root-portal .preview-popup {
+  width: 252px;
+  padding: 12px;
+  border-radius: var(--sweet-radius);
+  background: #ffffff;
+  box-shadow: var(--sweet-shadow-lg);
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity 140ms var(--sweet-ease),
+    transform 140ms var(--sweet-ease);
+}
+
+.s9-root-portal .preview-popup[data-starting-style],
+.s9-root-portal .preview-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+/* The palette is a floating layer too, so it keeps its fill — but not its
+   border, and its rows follow the flat rules. */
+.s9-root-portal .palette {
+  border: 0;
+  background: #ffffff;
+}
+
+.s9-root-portal .palette-search,
+.s9-root-portal .palette-foot {
+  border-color: rgba(15, 23, 42, 0.07);
+  background: none;
+}
+
+.s9-root-portal .palette-search input {
+  height: 46px;
+  font-size: 0.84375rem;
+}
+
+.s9-root-portal .palette-item[data-selected="true"] {
+  background: var(--sweet-tint-strong);
+}
+
+/* ---- meters -------------------------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .meter-track {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.07);
+}
+
+:is(.s9-root, .s9-root-portal) .meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--sweet-primary);
+  transition: width 600ms var(--sweet-ease);
+}
+
+/* ---- live activity feed -------------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .feed {
+  position: relative;
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  height: 168px;
+  mask-image: linear-gradient(180deg, #000 74%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 74%, transparent 100%);
+}
+
+:is(.s9-root, .s9-root-portal) .feed-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 8px 6px 0;
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+
+/* ---- the attention band --------------------------------------------------
+   The one place a wash is still doing work: it is a state, not a container. */
+:is(.s9-root, .s9-root-portal) .panel-soft {
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--sweet-tint);
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .spark {
+  display: block;
+  overflow: visible;
+}
+
+/* ---- home layout --------------------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .home-split {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr);
+}
+
+@media (max-width: 1100px) {
+  :is(.s9-root, .s9-root-portal) .home-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Rows carry their own padding now, so the tracks lose the card's inset and
+   the action cell holds a button plus the overflow menu. */
+:is(.s9-root, .s9-root-portal) .conn-head,
+:is(.s9-root, .s9-root-portal) .conn-row {
+  gap: 14px;
+  grid-template-columns: minmax(0, 0.95fr) 120px minmax(0, 1.15fr) 56px 80px 60px 92px 116px;
+}
+
+@media (max-width: 1200px) {
+  :is(.s9-root, .s9-root-portal) .conn-head,
+  :is(.s9-root, .s9-root-portal) .conn-row {
+    grid-template-columns: minmax(0, 1fr) 120px 56px 80px 116px;
+  }
+}
+
+@media (max-width: 860px) {
+  :is(.s9-root, .s9-root-portal) .conn-head,
+  :is(.s9-root, .s9-root-portal) .conn-row {
+    grid-template-columns: minmax(0, 1fr) 120px 116px;
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .audit-head,
+:is(.s9-root, .s9-root-portal) .audit-row {
+  gap: 12px;
+}
+
+:is(.s9-root, .s9-root-portal) .agent-head,
+:is(.s9-root, .s9-root-portal) .agent-row {
+  gap: 14px;
+}
+
+/* Without a card edge to end the row, a label and its control can drift a full
+   1180px apart. The measure is what pairs them now. */
+:is(.s9-root, .s9-root-portal) .setting,
+:is(.s9-root, .s9-root-portal) .kv {
+  max-width: 880px;
+}
+
+/* The meter is a footnote to the number above it, not the loudest thing in the
+   row — so it gets a footnote's width. */
+:is(.s9-root, .s9-root-portal) .meter-track {
+  max-width: 120px;
+}
+
+/* ==========================================================================
+   Layer 2 — v9: square corners, hairline rules
+   ==========================================================================
+   A test of the opposite instinct to v8. v8 took every line out and let
+   whitespace do the work; v9 keeps the flat ground and the compact scale but
+   squares every corner and puts thin rules back — selectively.
+
+   Where a rule goes:
+     · around the chrome (rail, top bar), so the frame of the app is legible
+     · under a table's column labels and between its rows, where alignment is
+       the whole point
+     · around a block of data that has to read as one object (the chart, the
+       feed, the stat strip, a settings group)
+     · around controls that aren't filled — an outlined button, an input
+   Where it doesn't:
+     · between a heading and its content
+     · around a list that reserves height for filtering, since an empty framed
+       box advertises the reservation the flat layout hides
+     · anywhere a second rule would sit within a few pixels of the first
+
+   Radius is 3px, from `--sweet-corner`, and it applies across the board —
+   buttons, inputs, panels, tags, monograms, popups, every box on every screen.
+   Square was the first pass and read as a terminal; 2px registered but the
+   corners still landed hard; 3px is where the edge stops being sharp without
+   the thing ever reading as "rounded". One token, so the whole version dials
+   from here. The only fully round things left are the ones round for a reason:
+   status dots and the pulse.
+   ========================================================================== */
+
+:is(.s9-root, .s9-root-portal) {
+  /* The whole version's corner, in one place. */
+  --sweet-corner: 3px;
+
+  --sweet-radius: var(--sweet-corner);
+  --sweet-radius-sm: var(--sweet-corner);
+
+  /* Two weights. The rule frames and separates; the soft one divides rows
+     inside something the rule already framed. */
+  --sweet-rule: rgba(15, 23, 42, 0.13);
+  --sweet-rule-soft: rgba(15, 23, 42, 0.07);
+
+  /* Popups are the one place with elevation, and now they carry a rule too:
+     a square white panel needs the edge to read as a panel. */
+  --sweet-shadow-lg: 0 6px 12px rgba(8, 21, 38, 0.06), 0 18px 36px rgba(8, 21, 38, 0.1);
+}
+
+/* ------------------------------------------------------------- everything - */
+
+/* One sweep, so nothing keeps a stray corner: the kit sets a radius in a dozen
+   rules and cutting them back one at a time would leave one behind.
+   The selector repeats the root class deliberately — it has to out-specify
+   `:is(.s9-root, …) .avatar` and friends, which are two classes deep. `:where`
+   keeps the universal half at zero so a component can still opt out below. */
+:is(.s9-root, .s9-root-portal):is(.s9-root, .s9-root-portal)
+  :where(*, *::before, *::after) {
+  border-radius: var(--sweet-corner);
+}
+
+/* The one exception: a status dot is round because round is what makes it a
+   dot. Everything else — marks, avatars, meters, pills — takes the 2px. */
+:is(.s9-root, .s9-root-portal):is(.s9-root, .s9-root-portal) .pill::before {
+  border-radius: 999px;
+}
+
+/* ---------------------------------------------------------------- chrome - */
+
+:is(.s9-root, .s9-root-portal) .rail {
+  border-right: 1px solid var(--sweet-rule);
+}
+
+:is(.s9-root, .s9-root-portal) .topbar {
+  border-bottom: 1px solid var(--sweet-rule);
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link[aria-current="page"] {
+  background: var(--sweet-primary);
+}
+
+/* ----------------------------------------------------------------- boxes - */
+
+/* A card is a framed block again — but only the ones that hold data. */
+:is(.s9-root, .s9-root-portal) .card {
+  padding: 14px;
+  border: 1px solid var(--sweet-rule);
+  background: none;
+}
+
+:is(.s9-root, .s9-root-portal) .card-flush {
+  padding: 0;
+}
+
+/* The stat strip goes back to a 1px grid: four cells sharing rules, which is
+   the most literal version of this idea in the whole screen. */
+:is(.s9-root, .s9-root-portal) .stat-row {
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--sweet-rule);
+  background: var(--sweet-rule);
+}
+
+:is(.s9-root, .s9-root-portal) .stat-cell {
+  gap: 5px;
+  padding: 12px 14px 14px;
+  background: var(--sweet-bg);
+}
+
+:is(.s9-root, .s9-root-portal) .stat-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* The attention band is a rule and a wash, not a rounded tile. */
+:is(.s9-root, .s9-root-portal) .panel-soft {
+  border: 1px solid var(--sweet-rule);
+  background: var(--sweet-tint);
+}
+
+/* ---------------------------------------------------------------- tables - */
+
+/* Column labels sit on a rule; rows divide with the soft one. No outer box —
+   the list reserves height when filtered, and a frame would advertise it. */
+:is(.s9-root, .s9-root-portal) .conn-head,
+:is(.s9-root, .s9-root-portal) .agent-head,
+:is(.s9-root, .s9-root-portal) .audit-head {
+  border-bottom: 1px solid var(--sweet-rule);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+:is(.s9-root, .s9-root-portal) .conn-row,
+:is(.s9-root, .s9-root-portal) .agent-row,
+:is(.s9-root, .s9-root-portal) .audit-row {
+  border-bottom: 1px solid var(--sweet-rule-soft);
+}
+
+/* The status tick reads as a bar in the margin rather than a rounded pip. */
+:is(.s9-root, .s9-root-portal) .conn-rail {
+  inset-block: 0;
+  width: 2px;
+}
+
+/* The one place the corner goes further than 3px rather than less: on a bar
+   this thin, capping the ends is what "not sharp" means. */
+:is(.s9-root, .s9-root-portal):is(.s9-root, .s9-root-portal) .conn-rail {
+  border-radius: 999px;
+}
+
+:is(.s9-root, .s9-root-portal) .kv,
+:is(.s9-root, .s9-root-portal) .setting {
+  border-bottom: 1px solid var(--sweet-rule-soft);
+}
+
+:is(.s9-root, .s9-root-portal) .kv:last-child,
+:is(.s9-root, .s9-root-portal) .setting:last-child {
+  border-bottom: 0;
+}
+
+:is(.s9-root, .s9-root-portal) .card-head {
+  padding-block: 0 10px;
+  border-bottom: 1px solid var(--sweet-rule);
+  margin-bottom: 10px;
+}
+
+/* -------------------------------------------------------------- controls - */
+
+/* Filled stays filled; everything else is an outline. On square corners an
+   outlined control reads as a control without needing a fill at all. */
+:is(.s9-root, .s9-root-portal) .button-secondary {
+  border-color: var(--sweet-rule);
+  background: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .button-secondary:hover:not(:disabled) {
+    border-color: var(--sweet-primary);
+    background: none;
+    color: var(--sweet-primary);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .button-danger {
+  border-color: rgba(220, 38, 38, 0.35);
+  background: none;
+}
+
+:is(.s9-root, .s9-root-portal) .input,
+:is(.s9-root, .s9-root-portal) .select {
+  border-color: var(--sweet-rule);
+  background: none;
+}
+
+:is(.s9-root, .s9-root-portal) .input:focus,
+:is(.s9-root, .s9-root-portal) .select:focus {
+  border-color: var(--sweet-accent);
+  box-shadow: inset 0 0 0 1px var(--sweet-accent);
+}
+
+/* A pressed chip is boxed rather than filled — same logic as the button. */
+:is(.s9-root, .s9-root-portal) .chip[aria-pressed="true"] {
+  border-color: var(--sweet-rule);
+  background: none;
+  color: var(--sweet-ink);
+}
+
+:is(.s9-root, .s9-root-portal) .kbd {
+  border: 1px solid var(--sweet-rule);
+  background: none;
+}
+
+/* The segmented control keeps one box around the set; the thumb inside it is
+   a filled square, so the selection still reads at a glance. */
+:is(.s9-root, .s9-root-portal) .seg {
+  gap: 0;
+  border: 1px solid var(--sweet-rule);
+}
+
+:is(.s9-root, .s9-root-portal) .seg-item {
+  min-height: 24px;
+}
+
+:is(.s9-root, .s9-root-portal) .seg-thumb {
+  background: var(--sweet-tint-strong);
+}
+
+/* Status keeps its wash but loses the capsule — a square tag at this size. */
+:is(.s9-root, .s9-root-portal) .pill {
+  padding: 2px 7px;
+}
+
+:is(.s9-root, .s9-root-portal) .switch {
+  border-color: var(--sweet-rule);
+}
+
+/* Monograms and avatars are square. At 30px this is the change you notice
+   first, which is a fair test of whether the idea holds. */
+:is(.s9-root, .s9-root-portal) .mark,
+:is(.s9-root, .s9-root-portal) .avatar {
+  box-shadow: none;
+}
+
+/* ------------------------------------------------------------- floating - */
+
+.s9-root-portal .menu-popup,
+.s9-root-portal .preview-popup,
+.s9-root-portal .palette {
+  border: 1px solid var(--sweet-rule);
+}
+
+.s9-root-portal .menu-item[data-highlighted] {
+  background: var(--sweet-tint-strong);
+}
+
+.s9-root-portal .tip {
+  padding: 4px 7px;
+}
+
+/* ---- the feed and the split ---------------------------------------------- */
+
+/* Both halves are framed blocks now, so the gap between them can close up. */
+:is(.s9-root, .s9-root-portal) .home-split {
+  gap: 14px;
+}
+
+:is(.s9-root, .s9-root-portal) .feed-item {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--sweet-rule-soft);
+}
+
+:is(.s9-root, .s9-root-portal) .feed-item:last-child {
+  border-bottom: 0;
+}
+
+/* A flush card is a frame with no padding of its own, so its rows carry the
+   inset — which also lets a head rule run edge to edge, the way this style
+   wants it. */
+:is(.s9-root, .s9-root-portal) .card-flush .card-head {
+  padding: 10px 14px;
+  margin-bottom: 0;
+}
+
+:is(.s9-root, .s9-root-portal) .card-flush .kv,
+:is(.s9-root, .s9-root-portal) .card-flush .setting {
+  padding-inline: 14px;
+  max-width: none;
+}
+
+/* A dozen boxed ⋯ triggers down the right edge of a table is a column of
+   noise. These get their frame on hover, where it means something. */
+:is(.s9-root, .s9-root-portal) .conn-row .button-icon,
+:is(.s9-root, .s9-root-portal) .site-body .button-icon {
+  border-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .conn-row .button-icon:hover,
+  :is(.s9-root, .s9-root-portal) .site-body .button-icon:hover {
+    border-color: var(--sweet-rule);
+  }
+}
+
+/* ==========================================================================
+   Layer 3 — corrections
+   ========================================================================== */
+
+/* ---- dashboard numbers are never boxed ----------------------------------
+   A stat is a number with a label. Ruling it into a cell makes it look like a
+   table of one row, and four of them look like a form. */
+:is(.s9-root, .s9-root-portal) .stat-row {
+  gap: 28px;
+  overflow: visible;
+  border: 0;
+  background: none;
+}
+
+:is(.s9-root, .s9-root-portal) .stat-cell {
+  padding: 0;
+  background: none;
+}
+
+/* ---- an icon never gets its own box --------------------------------------
+   The glyph is the affordance. A frame around each one turns a toolbar into a
+   row of tiny buttons competing with the content. The fill on hover is enough
+   to say it is pressable. */
+:is(.s9-root, .s9-root-portal) .button-icon {
+  border-color: transparent;
+  background: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .button-icon:hover:not(:disabled) {
+    border-color: transparent;
+    background: var(--sweet-control);
+    color: var(--sweet-ink);
+  }
+}
+
+/* ---- the corner scales with the surface ---------------------------------
+   3px is right for something the size of a chip. On a 640px modal the same
+   3px reads as a hard cut, so the floating layers step up with their size:
+   the bigger the panel, the bigger the corner. */
+.s9-root-portal .palette {
+  border-radius: 12px;
+}
+
+.s9-root-portal .menu-popup,
+.s9-root-portal .preview-popup,
+.s9-root-portal .notif-popup {
+  border-radius: 9px;
+}
+
+.s9-root-portal .tip {
+  border-radius: 6px;
+}
+
+.s9-root-portal .palette-item,
+.s9-root-portal .menu-item {
+  border-radius: 6px;
+}
+
+/* ---- the current page is marked, not highlighted -------------------------
+   Navy on the active rail item competes with the primary button — the loudest
+   thing on the screen shouldn't be a statement of where you already are. */
+:is(.s9-root, .s9-root-portal) .rail-link[aria-current="page"] {
+  background: rgba(15, 23, 42, 0.06);
+  color: var(--sweet-ink);
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .rail-link[aria-current="page"] .rail-badge {
+  background: rgba(245, 158, 11, 0.16);
+  color: var(--sweet-warning);
+}
+
+/* ---- the switch comes from the component library -------------------------
+   Radix's switch, via lab/uitimate. It is a pill on purpose: the shape is what
+   says "this slides", and the sweep that squares every corner has to leave it
+   alone the same way it leaves a status dot alone. */
+:is(.s9-root, .s9-root-portal):is(.s9-root, .s9-root-portal) [data-tag="switch"],
+:is(.s9-root, .s9-root-portal):is(.s9-root, .s9-root-portal) [data-tag="switch"] * {
+  border-radius: 999px;
+}
+
+/* ================================================================ notifications */
+
+.s9-root-portal .notif-popup {
+  width: min(94vw, 380px);
+  overflow: hidden;
+  border: 1px solid var(--sweet-rule);
+  background: #ffffff;
+  box-shadow: var(--sweet-shadow-lg);
+  outline: none;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity 140ms var(--sweet-ease),
+    transform 140ms var(--sweet-ease);
+}
+
+.s9-root-portal .notif-popup[data-starting-style],
+.s9-root-portal .notif-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.s9-root-portal .notif-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--sweet-rule);
+}
+
+.s9-root-portal .notif-list {
+  max-height: 62vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.s9-root-portal .notif-item {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--sweet-rule-soft);
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--sweet-transition);
+}
+
+.s9-root-portal .notif-item:last-of-type {
+  border-bottom: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .s9-root-portal .notif-item:hover {
+    background: var(--sweet-tint);
+  }
+}
+
+/* Unread is the dot in the gutter, not a filled row — the same rule the
+   status pills follow. */
+.s9-root-portal .notif-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 5px;
+  border-radius: 999px;
+}
+
+.s9-root-portal .notif-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border-top: 1px solid var(--sweet-rule);
+}
+
+/* ==========================================================================
+   Layer 4 — the wider app: tables, sheets, editors, review
+   ========================================================================== */
+
+/* ---- a generic table -----------------------------------------------------
+   Same rules as the connections table, but the column track is passed in by
+   the page: four screens now share this, and they don't share a shape. */
+:is(.s9-root, .s9-root-portal) .tbl-head,
+:is(.s9-root, .s9-root-portal) .tbl-row {
+  display: grid;
+  align-items: center;
+  gap: 14px;
+  padding-inline: 10px;
+}
+
+:is(.s9-root, .s9-root-portal) .tbl-head {
+  min-height: 30px;
+  border-bottom: 1px solid var(--sweet-rule);
+  color: var(--sweet-text-muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+:is(.s9-root, .s9-root-portal) .tbl-row {
+  min-height: 52px;
+  border-bottom: 1px solid var(--sweet-rule-soft);
+  transition: background-color var(--sweet-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .tbl-row:hover {
+    background: var(--sweet-tint);
+  }
+}
+
+/* A cell that opens something. It is a button for the keyboard, and looks like
+   the text it wraps for everyone else. */
+:is(.s9-root, .s9-root-portal) .link-cell {
+  display: block;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+:is(.s9-root, .s9-root-portal) .matrix .tbl-row:last-child {
+  border-bottom: 0;
+}
+
+/* ---- roles --------------------------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .role-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 24px;
+  padding: 0 7px;
+  border: 1px solid var(--sweet-rule);
+  background: none;
+  color: var(--sweet-text);
+  font-family: inherit;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .role-chip[data-locked] {
+  border-style: dashed;
+  color: var(--sweet-text-muted);
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .role-chip:not([data-locked]):hover {
+    border-color: var(--sweet-primary);
+    color: var(--sweet-primary);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .role-grid {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+:is(.s9-root, .s9-root-portal) .role-option {
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  border: 1px solid var(--sweet-rule);
+  background: none;
+  font-family: inherit;
+  font-size: 0.78125rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--sweet-transition), background-color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .role-option[aria-pressed="true"] {
+  border-color: var(--sweet-primary);
+  background: var(--sweet-tint);
+}
+
+/* ---- modal and sheet -----------------------------------------------------
+   Two floating shapes: a modal for a short decision, a sheet down the right
+   edge for a thing you read and edit while the list stays put behind it. */
+
+.s9-root-portal .modal,
+.s9-root-portal .confirm,
+.s9-root-portal .sheet {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--sweet-rule);
+  border-radius: 12px;
+  background: var(--sweet-bg);
+  box-shadow: var(--sweet-shadow-lg);
+  outline: none;
+  transition:
+    opacity 160ms var(--sweet-ease),
+    transform 160ms var(--sweet-ease);
+}
+
+.s9-root-portal .modal {
+  left: 50%;
+  top: 12vh;
+  width: min(94vw, 540px);
+  max-height: 76vh;
+  transform: translateX(-50%);
+}
+
+.s9-root-portal .confirm {
+  left: 50%;
+  top: 22vh;
+  width: min(94vw, 420px);
+  padding: 16px;
+  transform: translateX(-50%);
+}
+
+.s9-root-portal .modal[data-starting-style],
+.s9-root-portal .modal[data-ending-style],
+.s9-root-portal .confirm[data-starting-style],
+.s9-root-portal .confirm[data-ending-style] {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.98);
+}
+
+.s9-root-portal .sheet {
+  inset: 0 0 0 auto;
+  width: min(96vw, 620px);
+  border-radius: 12px 0 0 12px;
+  border-right: 0;
+}
+
+.s9-root-portal .sheet[data-starting-style],
+.s9-root-portal .sheet[data-ending-style] {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.s9-root-portal .modal-head,
+.s9-root-portal .sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--sweet-rule);
+}
+
+.s9-root-portal .modal-title,
+.s9-root-portal .sheet-title {
+  margin: 0;
+  color: var(--sweet-ink);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.s9-root-portal .modal-body {
+  display: grid;
+  gap: 14px;
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.s9-root-portal .modal-foot,
+.s9-root-portal .sheet-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--sweet-rule);
+}
+
+.s9-root-portal .confirm-title {
+  margin: 0;
+  color: var(--sweet-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.s9-root-portal .confirm-body {
+  margin: 6px 0 0;
+  color: var(--sweet-text-muted);
+  font-size: 0.78125rem;
+  line-height: 1.5;
+}
+
+.s9-root-portal .confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+/* ---- tabs ---------------------------------------------------------------- */
+
+.s9-root-portal .sheet-tabs {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.s9-root-portal .tabs {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--sweet-rule);
+}
+
+.s9-root-portal .tab {
+  padding: 8px 8px 9px;
+  border: 0;
+  background: none;
+  color: var(--sweet-text-muted);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: color var(--sweet-transition);
+}
+
+.s9-root-portal .tab[data-selected] {
+  color: var(--sweet-ink);
+  font-weight: 600;
+}
+
+/* The indicator is the only moving part; the labels stay put. */
+.s9-root-portal .tab-underline {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: var(--active-tab-width);
+  translate: var(--active-tab-left) 0;
+  background: var(--sweet-primary);
+  transition: translate 180ms var(--sweet-ease), width 180ms var(--sweet-ease);
+}
+
+.s9-root-portal .sheet-body {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  outline: none;
+}
+
+.s9-root-portal .sheet-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.s9-root-portal .sheet-section {
+  margin: 18px 0 8px;
+  color: var(--sweet-text-muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.s9-root-portal .sheet-section:first-child {
+  margin-top: 0;
+}
+
+/* ---- fields -------------------------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .field {
+  display: grid;
+  gap: 5px;
+}
+
+:is(.s9-root, .s9-root-portal) .field-label {
+  color: var(--sweet-ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+:is(.s9-root, .s9-root-portal) .field-hint {
+  color: var(--sweet-text-muted);
+  font-size: 0.6875rem;
+}
+
+/* ---- the markdown editor -------------------------------------------------
+   A skill is a document, so editing it looks like a document — monospace,
+   full width, no chrome between the writer and the text. */
+.s9-root-portal .editor {
+  width: 100%;
+  min-height: 420px;
+  padding: 12px;
+  border: 1px solid var(--sweet-rule);
+  background: #ffffff;
+  color: var(--sweet-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1.65;
+  resize: vertical;
+  tab-size: 2;
+}
+
+.s9-root-portal .editor:focus {
+  outline: none;
+  border-color: var(--sweet-accent);
+  box-shadow: inset 0 0 0 1px var(--sweet-accent);
+}
+
+.s9-root-portal .md {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.s9-root-portal .md-h1 {
+  margin: 0 0 10px;
+  color: var(--sweet-ink);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.s9-root-portal .md-h2 {
+  margin: 20px 0 8px;
+  color: var(--sweet-ink);
+  font-size: 0.84375rem;
+  font-weight: 600;
+}
+
+.s9-root-portal .md-h3 {
+  margin: 16px 0 6px;
+  color: var(--sweet-ink);
+  font-size: 0.78125rem;
+  font-weight: 600;
+}
+
+.s9-root-portal .md-p {
+  margin: 0 0 10px;
+}
+
+.s9-root-portal .md-list {
+  margin: 0 0 10px;
+  padding-left: 18px;
+}
+
+.s9-root-portal .md-list li {
+  margin-bottom: 4px;
+}
+
+.s9-root-portal .md-quote {
+  margin: 0 0 10px;
+  padding-left: 10px;
+  border-left: 2px solid var(--sweet-rule);
+  color: var(--sweet-text-muted);
+}
+
+.s9-root-portal .md-code {
+  margin: 0 0 12px;
+  overflow-x: auto;
+  padding: 10px 12px;
+  border: 1px solid var(--sweet-rule);
+  background: #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.6;
+}
+
+.s9-root-portal .md code {
+  padding: 1px 4px;
+  background: var(--sweet-control);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+/* ---- files, versions, runs ------------------------------------------------ */
+
+.s9-root-portal .file-row,
+.s9-root-portal .run-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--sweet-rule-soft);
+}
+
+.s9-root-portal .ver-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--sweet-rule-soft);
+}
+
+.s9-root-portal .ver-rail {
+  display: flex;
+  justify-content: center;
+  width: 12px;
+  flex: none;
+  padding-top: 5px;
+}
+
+.s9-root-portal .ver-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--sweet-rule);
+}
+
+.s9-root-portal .ver-dot[data-current] {
+  background: var(--sweet-primary);
+}
+
+/* ---- quality and confidence ----------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .rating-track {
+  display: block;
+  width: 48px;
+  height: 4px;
+  flex: none;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.09);
+}
+
+:is(.s9-root, .s9-root-portal) .rating-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* ---- skills, panel view --------------------------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .skill-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+:is(.s9-root, .s9-root-portal) .skill-card {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 13px 14px 12px;
+  border: 1px solid var(--sweet-rule);
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--sweet-transition), background-color var(--sweet-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .skill-card:hover {
+    border-color: var(--sweet-border-strong);
+    background: var(--sweet-tint);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .skill-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+:is(.s9-root, .s9-root-portal) .skill-card-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 2px;
+  color: var(--sweet-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+:is(.s9-root, .s9-root-portal) .skill-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+:is(.s9-root, .s9-root-portal) .skill-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 9px;
+  border-top: 1px solid var(--sweet-rule-soft);
+}
+
+/* ---- the source document -------------------------------------------------- */
+
+.s9-root-portal .doc {
+  padding: 12px;
+  border: 1px solid var(--sweet-rule);
+  background: #ffffff;
+}
+
+.s9-root-portal .doc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.s9-root-portal .doc-line {
+  margin: 8px 0 0;
+  font-size: 0.78125rem;
+}
+
+.s9-root-portal .doc-attach {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 7px 9px;
+  border: 1px dashed var(--sweet-rule);
+  color: var(--sweet-text-muted);
+}
+
+.s9-root-portal .doc-fields {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid var(--sweet-rule-soft);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.s9-root-portal .rationale {
+  margin: 12px 0 0;
+  padding: 9px 11px;
+  border-left: 2px solid var(--sweet-primary);
+  background: var(--sweet-tint);
+  font-size: 0.78125rem;
+  line-height: 1.5;
+}
+
+.s9-root-portal .flags {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.s9-root-portal .flag {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  color: var(--sweet-warning);
+  font-size: 0.75rem;
+}
+
+.s9-root-portal .flag-dot {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 999px;
+  background: var(--sweet-warning-dot);
+  transform: translateY(-1px);
+}
+
+/* ---- bulk actions ---------------------------------------------------------
+   Sits over the table rather than pushing it, because it appears and vanishes
+   as fast as a checkbox is clicked. */
+:is(.s9-root, .s9-root-portal) .bulk-bar {
+  position: sticky;
+  bottom: 16px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 8px 10px;
+  border: 1px solid var(--sweet-rule);
+  background: color-mix(in oklab, var(--sweet-bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(8, 21, 38, 0.08);
+}
+
+/* The palette's row for something already connected: still legible, plainly
+   not on offer. */
+.s9-root-portal .palette-item[data-connected] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.s9-root-portal .check[data-locked] {
+  opacity: 0.6;
+}
+
+/* The palette defined `.check` inside the portal only; the proposals table
+   needs the same box in the page, so the rule moves up to both roots. */
+:is(.s9-root, .s9-root-portal) .check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--sweet-border-strong);
+  background: none;
+  color: transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--sweet-transition),
+    border-color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .check[data-on],
+:is(.s9-root, .s9-root-portal) .check[data-checked] {
+  border-color: transparent;
+  background: var(--sweet-primary);
+  color: #ffffff;
+}
+
+.s9-root-portal .palette .check {
+  width: 17px;
+  height: 17px;
+}
+
+/* Tailwind's preflight strips list markers globally; the rendered skill file is
+   the one place in v9 that actually wants them. */
+.s9-root-portal .md-list {
+  list-style: disc;
+}
+
+.s9-root-portal .md-list[data-ordered] {
+  list-style: decimal;
+}
+
+.s9-root-portal .md-list li::marker {
+  color: var(--sweet-text-muted);
+}
+
+/* ==========================================================================
+   Layer 5 — one hue for state, and searches that aren't boxes
+   ==========================================================================
+   Status stops using colour to say how bad something is. Red, amber and green
+   were three hues doing one job — the row already says "Token expiring", and
+   a second signal in a third colour is decoration. State speaks in the
+   version's navy and in grey, and the hierarchy comes from fill instead:
+
+     solid navy      something is broken and an agent is failing right now
+     navy on tint    something needs a person soon
+     grey, no fill   nothing to do
+
+   Red survives in exactly one place: a control that destroys something when
+   you press it. That is not a status, it is a warning about your own next
+   action, and it is the only thing left on the screen wearing a second hue.
+   ========================================================================== */
+
+:is(.s9-root, .s9-root-portal) {
+  --sweet-attention: var(--sweet-primary);
+  --sweet-attention-bg: rgba(30, 55, 107, 0.09);
+  --sweet-quiet: var(--sweet-text-muted);
+  --sweet-quiet-bg: rgba(15, 23, 42, 0.05);
+
+  /* The kit's status tokens all point at the two survivors. */
+  --sweet-success: var(--sweet-quiet);
+  --sweet-success-bg: transparent;
+  --sweet-warning: var(--sweet-attention);
+  --sweet-warning-dot: var(--sweet-attention);
+  --sweet-danger: var(--sweet-attention);
+  --sweet-danger-bg: var(--sweet-attention-bg);
+  --sweet-neutral: var(--sweet-quiet);
+  --sweet-neutral-bg: transparent;
+
+  /* Destroying something is not a state. */
+  --sweet-destructive: #b91c1c;
+  --sweet-destructive-bg: rgba(220, 38, 38, 0.07);
+}
+
+/* ---- pills --------------------------------------------------------------- */
+
+/* Broken now. The only filled pill in the app. */
+:is(.s9-root, .s9-root-portal) .pill-danger {
+  background: var(--sweet-primary);
+  color: #ffffff;
+}
+
+:is(.s9-root, .s9-root-portal) .pill-danger::before {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* Needs a person, but not this second. */
+:is(.s9-root, .s9-root-portal) .pill-warning,
+:is(.s9-root, .s9-root-portal) .pill-accent {
+  background: var(--sweet-attention-bg);
+  color: var(--sweet-primary);
+}
+
+:is(.s9-root, .s9-root-portal) .pill-warning::before,
+:is(.s9-root, .s9-root-portal) .pill-accent::before {
+  background: var(--sweet-primary);
+}
+
+/* Fine. A dot and a word, no tile — the quiet states are the majority of any
+   list, and filling them is what made the loud ones hard to find. */
+:is(.s9-root, .s9-root-portal) .pill-success,
+:is(.s9-root, .s9-root-portal) .pill-neutral {
+  padding-left: 0;
+  background: none;
+  color: var(--sweet-text-muted);
+}
+
+:is(.s9-root, .s9-root-portal) .pill-success::before,
+:is(.s9-root, .s9-root-portal) .pill-neutral::before {
+  background: var(--sweet-border-strong);
+}
+
+/* ---- destructive controls keep the red ----------------------------------- */
+
+:is(.s9-root, .s9-root-portal) .button-danger {
+  border-color: rgba(220, 38, 38, 0.3);
+  background: none;
+  color: var(--sweet-destructive);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .button-danger:hover:not(:disabled) {
+    border-color: var(--sweet-destructive);
+    background: var(--sweet-destructive-bg);
+  }
+}
+
+.s9-root-portal .menu-item[data-danger] {
+  color: var(--sweet-destructive);
+}
+
+.s9-root-portal .menu-item[data-danger][data-highlighted] {
+  background: var(--sweet-destructive-bg);
+}
+
+/* ---- search: an icon and a line ------------------------------------------
+   A box around a search field is a box around a word. The only one that keeps
+   its fill is the command bar in the nav, because that one is a button
+   pretending to be a field and needs to look pressable. */
+:is(.s9-root, .s9-root-portal) .search-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding: 0 2px;
+  border-bottom: 1px solid var(--sweet-rule);
+  color: var(--sweet-text-muted);
+  transition: border-color var(--sweet-transition);
+}
+
+:is(.s9-root, .s9-root-portal) .search-line:focus-within {
+  border-bottom-color: var(--sweet-primary);
+}
+
+:is(.s9-root, .s9-root-portal) .search-line input {
+  min-width: 0;
+  flex: 1;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sweet-text);
+  font-family: inherit;
+  font-size: 0.78125rem;
+}
+
+:is(.s9-root, .s9-root-portal) .search-line input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+:is(.s9-root, .s9-root-portal) .search-line input::placeholder {
+  color: var(--sweet-text-muted);
+}
+
+/* The meter and confidence bars carry their value in length alone now. */
+:is(.s9-root, .s9-root-portal) .rating-fill {
+  background: var(--sweet-primary);
+}
+
+/* ==========================================================================
+   Layer 6 — softer buttons, home screen only
+   ==========================================================================
+   An experiment held to one page: buttons in the Connections page body take an
+   8px corner instead of the version's 3px. Everything else on that page — the
+   panels, the tables, the chips, the segmented control, the pills — keeps the
+   3px, so this reads as a change to one component rather than a second style.
+
+   The top bar is deliberately not included: it is shared chrome, so rounding
+   its buttons here would round them on every screen.
+   ========================================================================== */
+
+:is(.s9-root, .s9-root-portal) .page[data-home] .button {
+  border-radius: 8px;
+}
+
+/* ---- pagination ----------------------------------------------------------
+   The vendored shadcn-style pager from lab/uitimate. Its markup and behaviour
+   come from the library; these rules take its Tailwind theming — 36px pills in
+   the global near-black — down to v9's scale and hue. */
+:is(.s9-root, .s9-root-portal) .pager-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid var(--sweet-rule);
+}
+
+:is(.s9-root, .s9-root-portal) .pager {
+  margin: 0;
+  width: auto;
+  justify-content: flex-end;
+}
+
+:is(.s9-root, .s9-root-portal) .pager-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: none;
+  color: var(--sweet-text-muted);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  user-select: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .pager-link:hover {
+    background: var(--sweet-tint);
+    color: var(--sweet-ink);
+  }
+}
+
+:is(.s9-root, .s9-root-portal) .pager-link[aria-current="page"] {
+  background: var(--sweet-control);
+  color: var(--sweet-ink);
+  font-weight: 600;
+}
+
+/* A disabled arrow stays in place — the row must not reflow at the ends. */
+:is(.s9-root, .s9-root-portal) .pager-link[aria-disabled="true"] {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+:is(.s9-root, .s9-root-portal) .pager-gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 24px;
+  color: var(--sweet-text-muted);
+}
+
+/* ==========================================================================
+   Layer 7 — filters read as tabs
+   ==========================================================================
+   The filter rows (All / Needs review / …, All / Tool calls / …) stop putting
+   a box around the selected item. A box says "button"; these are a set of
+   views over one list, so the selected one gets an underline and the weight it
+   already had. Same signal as the tab strip in the skill sheet, which means
+   the app now has one way of showing "you are looking at this one".
+
+   The underline is an inset shadow rather than a border so the row doesn't
+   shift by 2px when the selection moves.
+   ========================================================================== */
+
+:is(.s9-root, .s9-root-portal) .chip {
+  padding: 0 8px;
+}
+
+:is(.s9-root, .s9-root-portal) .chip[aria-pressed="true"] {
+  /* Layer 2 gave the pressed chip an outline when everything was getting one.
+     The underline replaces it, so the box has to go back to transparent. */
+  border-color: transparent;
+  background: none;
+  color: var(--sweet-ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--sweet-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.s9-root, .s9-root-portal) .chip:not([aria-pressed="true"]):hover {
+    background: none;
+    color: var(--sweet-ink);
+    box-shadow: inset 0 -2px 0 var(--sweet-rule);
+  }
+}
+
+/* ==========================================================================
+   Layer 8 — a straight underline, and rows with room
+   ========================================================================== */
+
+/* An inset shadow follows the element's corner, so the 3px radius was bending
+   the ends of the tab underline up. The chip carries no fill or border any
+   more, so its radius was only ever shaping that line: square it and the line
+   is a line. */
+:is(.s9-root, .s9-root-portal) .chip {
+  border-radius: 0;
+}
+
+/* ---- row height ----------------------------------------------------------
+   Every row primitive gains six pixels. Not a change of density — the type and
+   the tracks are the same — just enough air that a two-line cell isn't touching
+   the rule above it. */
+:is(.s9-root, .s9-root-portal) .conn-row,
+:is(.s9-root, .s9-root-portal) .agent-row,
+:is(.s9-root, .s9-root-portal) .tbl-row {
+  min-height: 58px;
+}
+
+:is(.s9-root, .s9-root-portal) .audit-row {
+  min-height: 46px;
+}
+
+:is(.s9-root, .s9-root-portal) .kv {
+  min-height: 44px;
+}
+
+:is(.s9-root, .s9-root-portal) .setting {
+  padding-block: 14px;
+}
+
+.s9-root-portal .file-row,
+.s9-root-portal .run-row {
+  min-height: 44px;
+}
+
+.s9-root-portal .notif-item {
+  padding-block: 11px;
+}
+
+/* The header keeps its own height: growing it too would just push the first
+   row further from its labels. */
+:is(.s9-root, .s9-root-portal) .conn-head,
+:is(.s9-root, .s9-root-portal) .agent-head,
+:is(.s9-root, .s9-root-portal) .audit-head,
+:is(.s9-root, .s9-root-portal) .tbl-head {
+  min-height: 32px;
+}

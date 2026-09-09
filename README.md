@@ -106,9 +106,11 @@ system.
    components (Radix/shadcn, magicui, dotmatrix). They exist so this repo stands
    alone, but upstream will move. Treat them as read-only and re-vendor
    deliberately; the npm package does not export them.
-3. **The reference implementation.** v9 in the mocks repo is where every rule
-   here was decided. When the two disagree, work out which is right and fix the
-   other one the same day.
+3. **The reference implementation.** `reference/v9/` is where every rule here
+   was decided. When it and the docs disagree, work out which is right and fix
+   the other one the same day. Its two known overlaps — `v9.css` versus the
+   flattened token sheets, and `v9/ui.tsx` versus `react/primitives.tsx` — are
+   called out in `reference/v9/README.md`.
 4. **Marketing.** It has more freedom by design, which makes it the easiest
    place for a second palette or a second type scale to appear. The four things
    it may not change are listed at the top of `MARKETING.md`.

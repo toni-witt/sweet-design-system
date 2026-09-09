@@ -26,6 +26,7 @@ looked at, so check there before changing anything here.
 | `react/` | The primitives that aren't in any library. |
 | `library/` | Vendored component source, copied so this folder stands alone. |
 | `assets/` | The logo, and a note on which file is safe to use. |
+| `../../reference/v9/` | Eight built screens — screenshots and source — where all of this was decided. |
 
 ## Starting a feature
 

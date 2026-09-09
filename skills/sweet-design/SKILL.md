@@ -47,6 +47,11 @@ detailed work in that area.
 | A landing page, docs, OG image, deck | `MARKETING.md` |
 | Something the system doesn't cover | `OPEN-QUESTIONS.md` |
 | Writing the CSS | `tokens.css`, `patterns.css` |
+| Seeing it applied, or checking a detail against real code | `../../reference/v9/` |
+
+`reference/v9/` is eight built screens where every rule here was decided —
+screenshots in `reference/v9/screens/`, source beside them. When a rule is
+ambiguous, look at how it was actually resolved there.
 
 Read the file. Don't work from this summary alone — every rule in
 `PRINCIPLES.md` carries the reasoning behind it, and the reasoning is what tells
