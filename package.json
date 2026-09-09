@@ -1,0 +1,25 @@
+{
+  "name": "@toni-witt/sweet-design",
+  "version": "1.0.0",
+  "description": "The Sweet design system — tokens, patterns and React primitives.",
+  "license": "UNLICENSED",
+  "private": true,
+  "sideEffects": ["*.css"],
+  "files": ["skills/sweet-design"],
+  "exports": {
+    "./tokens.css": "./skills/sweet-design/tokens.css",
+    "./patterns.css": "./skills/sweet-design/patterns.css",
+    "./react/primitives": "./skills/sweet-design/react/primitives.tsx",
+    "./react/icon": "./skills/sweet-design/react/icon.tsx",
+    "./react/brand": "./skills/sweet-design/react/brand.tsx",
+    "./docs/*": "./skills/sweet-design/*",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "@base-ui/react": "^1.8.0",
+    "lucide-react": "^1.43.0",
+    "motion": "^13.2.0",
+    "react": ">=19"
+  },
+  "publishConfig": { "access": "restricted" }
+}

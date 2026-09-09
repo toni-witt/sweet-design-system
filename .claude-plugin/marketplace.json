@@ -1,0 +1,14 @@
+{
+  "name": "sweet",
+  "owner": { "name": "Sweet" },
+  "metadata": {
+    "description": "Sweet's internal design system, distributed as a Claude Code plugin."
+  },
+  "plugins": [
+    {
+      "name": "sweet-design",
+      "source": "./",
+      "description": "Brand rules, tokens, patterns and component guidance. Loads when an agent is writing or reviewing UI."
+    }
+  ]
+}

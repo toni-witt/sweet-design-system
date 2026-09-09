@@ -1,0 +1,7 @@
+{
+  "name": "sweet-design",
+  "version": "1.0.0",
+  "description": "The Sweet design system — brand rules, tokens, patterns and component guidance for building UI that matches the product.",
+  "author": { "name": "Sweet" },
+  "keywords": ["design-system", "ui", "css", "react", "brand"]
+}

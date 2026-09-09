@@ -1,0 +1,950 @@
+/**
+ * Sweet — patterns
+ * ================
+ *
+ * Every component shape the system has settled on, written once. Import after
+ * tokens.css. Class names are unprefixed on purpose: they only ever apply
+ * inside `.sweet` / `.sweet-portal`.
+ *
+ *   import "@/design-system/tokens.css";
+ *   import "@/design-system/patterns.css";
+ *
+ * If a new feature needs a shape that isn't here, add it here rather than in
+ * the feature — that is the difference between a system and a stylesheet.
+ */
+
+/* ============================================================== typography */
+
+:is(.sweet, .sweet-portal) .page {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 28px var(--page-pad) 96px;
+}
+
+:is(.sweet, .sweet-portal) .page-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* Section headings stand alone. No explanatory grey line underneath them —
+   see PRINCIPLES.md § No subtitles. */
+:is(.sweet, .sweet-portal) .section-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--t-section);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+:is(.sweet, .sweet-portal) .fade {
+  color: var(--muted);
+}
+
+:is(.sweet, .sweet-portal) .strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+:is(.sweet, .sweet-portal) .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ================================================================= buttons */
+
+:is(.sweet, .sweet-portal) .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--t-cell);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--base),
+    border-color var(--base),
+    color var(--base),
+    transform var(--base);
+}
+
+:is(.sweet, .sweet-portal) .button:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+:is(.sweet, .sweet-portal) .button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+:is(.sweet, .sweet-portal) .button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* One filled button per view. It is the thing worth pressing. */
+:is(.sweet, .sweet-portal) .button-primary {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* Unfilled means outlined — on square corners that reads as a control without
+   needing a fill. */
+:is(.sweet, .sweet-portal) .button-secondary {
+  border-color: var(--rule);
+  background: none;
+}
+
+/* The only red in the system, and only on a control that destroys something.
+   A repair action ("Reconnect") is primary, not danger. */
+:is(.sweet, .sweet-portal) .button-danger {
+  border-color: var(--destructive-line);
+  background: none;
+  color: var(--destructive);
+}
+
+:is(.sweet, .sweet-portal) .button-small {
+  min-height: 26px;
+  padding: 0 10px;
+  font-size: var(--t-meta);
+}
+
+/* An icon never gets its own box. The glyph is the affordance; the fill
+   arrives on hover, where it means something. */
+:is(.sweet, .sweet-portal) .button-icon {
+  min-height: 30px;
+  width: 30px;
+  padding: 0;
+  border-color: transparent;
+  background: none;
+  color: var(--muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.sweet, .sweet-portal) .button-primary:hover:not(:disabled) {
+    background: var(--primary-hover);
+  }
+  :is(.sweet, .sweet-portal) .button-secondary:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  :is(.sweet, .sweet-portal) .button-danger:hover:not(:disabled) {
+    border-color: var(--destructive);
+    background: var(--destructive-bg);
+  }
+  :is(.sweet, .sweet-portal) .button-icon:hover:not(:disabled) {
+    border-color: transparent;
+    background: var(--control);
+    color: var(--ink);
+  }
+}
+
+/* ================================================================== inputs */
+
+:is(.sweet, .sweet-portal) .input,
+:is(.sweet, .sweet-portal) .select,
+:is(.sweet, .sweet-portal) .textarea {
+  width: 100%;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--rule);
+  background: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--t-cell);
+  transition: border-color var(--base), box-shadow var(--base);
+}
+
+:is(.sweet, .sweet-portal) .textarea {
+  padding: 8px 10px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+:is(.sweet, .sweet-portal) .input::placeholder,
+:is(.sweet, .sweet-portal) .textarea::placeholder {
+  color: var(--muted);
+}
+
+:is(.sweet, .sweet-portal) .input:focus,
+:is(.sweet, .sweet-portal) .select:focus,
+:is(.sweet, .sweet-portal) .textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+/* A box around a search field is a box around a word. Search is an icon and a
+   line — everywhere except the command bar in the nav, which is a button
+   pretending to be a field and has to look pressable. */
+:is(.sweet, .sweet-portal) .search-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding: 0 2px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  transition: border-color var(--base);
+}
+
+:is(.sweet, .sweet-portal) .search-line:focus-within {
+  border-bottom-color: var(--primary);
+}
+
+:is(.sweet, .sweet-portal) .search-line input {
+  min-width: 0;
+  flex: 1;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--t-cell);
+}
+
+:is(.sweet, .sweet-portal) .search-line input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+:is(.sweet, .sweet-portal) .field {
+  display: grid;
+  gap: 5px;
+}
+
+:is(.sweet, .sweet-portal) .field-label {
+  color: var(--ink);
+  font-size: var(--t-meta);
+  font-weight: 600;
+}
+
+:is(.sweet, .sweet-portal) .field-hint {
+  color: var(--muted);
+  font-size: var(--t-label);
+}
+
+/* The checkbox. Filled when on; no tick outline when off. */
+:is(.sweet, .sweet-portal) .check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: none;
+  color: transparent;
+  cursor: pointer;
+  transition: background-color var(--base), border-color var(--base);
+}
+
+:is(.sweet, .sweet-portal) .check[data-checked],
+:is(.sweet, .sweet-portal) .check[data-on] {
+  border-color: transparent;
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* ============================================================ filter tabs */
+
+/* A row of views over one list. Not chips — a box says "button", and these
+   select rather than toggle. Selected gets weight and a straight underline;
+   the inset shadow keeps the row from shifting 2px as the selection moves. */
+:is(.sweet, .sweet-portal) .tab-filter {
+  min-height: 28px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: var(--t-cell);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--base), box-shadow var(--base);
+}
+
+:is(.sweet, .sweet-portal) .tab-filter[aria-pressed="true"] {
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.sweet, .sweet-portal) .tab-filter:not([aria-pressed="true"]):hover {
+    color: var(--ink);
+    box-shadow: inset 0 -2px 0 var(--rule);
+  }
+}
+
+/* ========================================================= segmented control */
+
+/* Switches what one panel renders. Distinct from the filter tabs on purpose:
+   exclusive, small, and the selection slides. */
+:is(.sweet, .sweet-portal) .seg {
+  display: inline-flex;
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+
+:is(.sweet, .sweet-portal) .seg-item {
+  position: relative;
+  min-height: 24px;
+  padding: 0 10px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: var(--t-cell);
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--base);
+}
+
+:is(.sweet, .sweet-portal) .seg-item[data-pressed] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+:is(.sweet, .sweet-portal) .seg-thumb {
+  position: absolute;
+  inset: 0;
+  background: var(--tint-strong);
+}
+
+:is(.sweet, .sweet-portal) .seg-label {
+  position: relative;
+}
+
+/* ================================================================== status */
+
+/* Three states, one hue, hierarchy by fill. See PRINCIPLES.md § Status. */
+:is(.sweet, .sweet-portal) .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 7px;
+  font-size: var(--t-label);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+:is(.sweet, .sweet-portal) .pill::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+/* Broken now. The only filled pill in the app. */
+:is(.sweet, .sweet-portal) .pill-critical {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+:is(.sweet, .sweet-portal) .pill-critical::before {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* Needs a person, but not this second. */
+:is(.sweet, .sweet-portal) .pill-attention {
+  background: var(--attention-bg);
+  color: var(--primary);
+}
+
+/* Fine. A dot and a word — the quiet states are most of any list, and filling
+   them is what made the loud ones hard to find. */
+:is(.sweet, .sweet-portal) .pill-quiet {
+  padding-left: 0;
+  background: none;
+  color: var(--muted);
+}
+
+:is(.sweet, .sweet-portal) .pill-quiet::before {
+  background: var(--quiet-dot);
+}
+
+:is(.sweet, .sweet-portal) .pill-live::before {
+  animation: sweet-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes sweet-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* A tag is a label, not a state: no dot, no colour. */
+:is(.sweet, .sweet-portal) .tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  background: var(--control);
+  color: var(--muted);
+  font-size: var(--t-micro);
+  font-weight: 500;
+}
+
+/* ================================================================== tables */
+
+/* One table primitive. The column track is passed in per screen —
+   `style={{ gridTemplateColumns: … }}` — because screens share the rules, not
+   the shape. */
+:is(.sweet, .sweet-portal) .tbl-head,
+:is(.sweet, .sweet-portal) .tbl-row {
+  display: grid;
+  align-items: center;
+  gap: 14px;
+  padding-inline: 10px;
+}
+
+:is(.sweet, .sweet-portal) .tbl-head {
+  min-height: var(--row-head);
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+:is(.sweet, .sweet-portal) .tbl-row {
+  min-height: var(--row);
+  border-bottom: 1px solid var(--rule-soft);
+  transition: background-color var(--base);
+}
+
+:is(.sweet, .sweet-portal) .tbl-row-dense {
+  min-height: var(--row-dense);
+  font-size: var(--t-meta);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.sweet, .sweet-portal) .tbl-row:hover {
+    background: var(--tint);
+  }
+}
+
+/* A cell that opens something: a button for the keyboard, plain text to look
+   at. Never a bare div with an onClick. */
+:is(.sweet, .sweet-portal) .link-cell {
+  display: block;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* The status tick in the row's left margin. */
+:is(.sweet, .sweet-portal) .row-rail {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 2px;
+}
+
+/* =================================================================== stats */
+
+/* Dashboard numbers are never boxed. A stat is a number with a label; ruling
+   four of them into cells makes the row read as a form. */
+:is(.sweet, .sweet-portal) .stat-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 28px;
+}
+
+:is(.sweet, .sweet-portal) .stat {
+  display: grid;
+  gap: 5px;
+  align-content: start;
+}
+
+:is(.sweet, .sweet-portal) .stat-label {
+  color: var(--muted);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+:is(.sweet, .sweet-portal) .stat-value {
+  color: var(--ink);
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.sweet, .sweet-portal) .stat-caption {
+  color: var(--muted);
+  font-size: var(--t-meta);
+}
+
+@media (max-width: 860px) {
+  :is(.sweet, .sweet-portal) .stat-row {
+    grid-auto-flow: row;
+    gap: 18px;
+  }
+}
+
+/* ================================================================== panels */
+
+/* A framed block, for data that has to read as one object — a chart, a feed,
+   a settings group. Not for a heading and its content: that gap is enough. */
+:is(.sweet, .sweet-portal) .panel {
+  padding: 14px;
+  border: 1px solid var(--rule);
+  background: none;
+}
+
+/* A frame with no padding of its own; its rows carry the inset, which lets a
+   head rule run edge to edge. */
+:is(.sweet, .sweet-portal) .panel-flush {
+  padding: 0;
+}
+
+:is(.sweet, .sweet-portal) .panel-flush > .panel-head {
+  padding: 10px 14px;
+  margin-bottom: 0;
+}
+
+:is(.sweet, .sweet-portal) .panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 0 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* A state, not a container: the one place a wash is still doing work. */
+:is(.sweet, .sweet-portal) .panel-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  background: var(--tint);
+}
+
+/* Label-and-control rows. Capped, because without a card edge to stop them a
+   label and its control drift a full page apart. */
+:is(.sweet, .sweet-portal) .setting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: var(--measure);
+  padding-block: 14px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+:is(.sweet, .sweet-portal) .setting:last-child {
+  border-bottom: 0;
+}
+
+:is(.sweet, .sweet-portal) .setting-label {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--t-cell);
+  font-weight: 600;
+}
+
+:is(.sweet, .sweet-portal) .setting-hint {
+  margin: 3px 0 0;
+  max-width: 64ch;
+  color: var(--muted);
+  font-size: var(--t-meta);
+  line-height: 1.5;
+}
+
+/* ============================================================== identity */
+
+/* Monogram tiles stand in for connector icons. Brand tints here are identity,
+   not status — this is the one place hue is allowed to run free. */
+:is(.sweet, .sweet-portal) .mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: #ffffff;
+  font-size: var(--t-label);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+:is(.sweet, .sweet-portal) .mark-sm {
+  width: 22px;
+  height: 22px;
+  font-size: var(--t-micro);
+}
+
+:is(.sweet, .sweet-portal) .avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: var(--t-label);
+  font-weight: 600;
+}
+
+/* ================================================================= meters */
+
+/* The length is the value. Colouring it as well says the same number twice in
+   a hue that means nothing on its own. */
+:is(.sweet, .sweet-portal) .meter-track {
+  display: block;
+  width: 48px;
+  height: 4px;
+  flex: none;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.09);
+}
+
+:is(.sweet, .sweet-portal) .meter-fill {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+  transition: width 600ms var(--ease);
+}
+
+/* ======================================================== floating layers */
+
+/* The only things in the system with a fill and a shadow. A popup with
+   neither is unreadable over the content it covers. */
+
+.sweet-portal .backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(8, 21, 38, 0.28);
+  backdrop-filter: blur(2px);
+}
+
+.sweet-portal .popover {
+  padding: 5px;
+  border: 1px solid var(--rule);
+  border-radius: var(--corner-popover);
+  background: var(--paper);
+  box-shadow: var(--shadow-float);
+  outline: none;
+  transform-origin: var(--transform-origin);
+  transition: opacity 130ms var(--ease), transform 130ms var(--ease);
+}
+
+.sweet-portal .popover[data-starting-style],
+.sweet-portal .popover[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.sweet-portal .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 30px;
+  padding: 0 9px;
+  border-radius: 6px;
+  color: var(--text);
+  font-size: var(--t-cell);
+  cursor: default;
+  outline: none;
+  user-select: none;
+}
+
+.sweet-portal .menu-item[data-highlighted] {
+  background: var(--tint);
+  color: var(--ink);
+}
+
+.sweet-portal .menu-item[data-danger] {
+  color: var(--destructive);
+}
+
+.sweet-portal .menu-item[data-danger][data-highlighted] {
+  background: var(--destructive-bg);
+}
+
+.sweet-portal .menu-sep {
+  height: 1px;
+  margin: 4px 7px;
+  background: var(--rule-soft);
+}
+
+.sweet-portal .tip {
+  padding: 4px 7px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: var(--t-meta);
+  font-weight: 500;
+  line-height: 1.35;
+  transform-origin: var(--transform-origin);
+  transition: opacity var(--fast), transform var(--fast);
+}
+
+.sweet-portal .tip[data-starting-style],
+.sweet-portal .tip[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+/* A modal for a short decision; a sheet down the right edge for a thing you
+   read and edit while the list stays put behind it. */
+.sweet-portal .modal,
+.sweet-portal .confirm,
+.sweet-portal .sheet {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--rule);
+  border-radius: var(--corner-modal);
+  background: var(--bg);
+  box-shadow: var(--shadow-float);
+  outline: none;
+  transition: opacity var(--base), transform var(--base);
+}
+
+.sweet-portal .modal {
+  left: 50%;
+  top: 12vh;
+  width: min(94vw, 540px);
+  max-height: 76vh;
+  transform: translateX(-50%);
+}
+
+.sweet-portal .confirm {
+  left: 50%;
+  top: 22vh;
+  width: min(94vw, 420px);
+  padding: 16px;
+  transform: translateX(-50%);
+}
+
+.sweet-portal .modal[data-starting-style],
+.sweet-portal .modal[data-ending-style],
+.sweet-portal .confirm[data-starting-style],
+.sweet-portal .confirm[data-ending-style] {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.98);
+}
+
+.sweet-portal .sheet {
+  inset: 0 0 0 auto;
+  width: min(96vw, 620px);
+  border-right: 0;
+  border-radius: var(--corner-modal) 0 0 var(--corner-modal);
+}
+
+.sweet-portal .sheet[data-starting-style],
+.sweet-portal .sheet[data-ending-style] {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.sweet-portal .modal-head,
+.sweet-portal .sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sweet-portal .modal-title,
+.sweet-portal .sheet-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--t-section);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.sweet-portal .modal-body,
+.sweet-portal .sheet-body {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  outline: none;
+}
+
+.sweet-portal .modal-body {
+  display: grid;
+  gap: 14px;
+}
+
+.sweet-portal .modal-foot,
+.sweet-portal .sheet-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--rule);
+}
+
+/* ==================================================================== tabs */
+
+/* The same signal as the filter row: an underline under the selected one. */
+.sweet-portal .tabs,
+:is(.sweet, .sweet-portal) .tabs {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+:is(.sweet, .sweet-portal) .tab {
+  padding: 8px 8px 9px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: var(--t-meta);
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: color var(--base);
+}
+
+:is(.sweet, .sweet-portal) .tab[data-selected] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+:is(.sweet, .sweet-portal) .tab-underline {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: var(--active-tab-width);
+  translate: var(--active-tab-left) 0;
+  background: var(--primary);
+  transition: translate 180ms var(--ease), width 180ms var(--ease);
+}
+
+/* ============================================================== pagination */
+
+:is(.sweet, .sweet-portal) .pager-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid var(--rule);
+}
+
+:is(.sweet, .sweet-portal) .pager {
+  margin: 0;
+  width: auto;
+  justify-content: flex-end;
+}
+
+:is(.sweet, .sweet-portal) .pager-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: var(--t-meta);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  user-select: none;
+}
+
+:is(.sweet, .sweet-portal) .pager-link[aria-current="page"] {
+  background: var(--control);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+:is(.sweet, .sweet-portal) .pager-link[aria-disabled="true"] {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.sweet, .sweet-portal) .pager-link:hover {
+    background: var(--tint);
+    color: var(--ink);
+  }
+}
+
+/* ============================================================== bulk actions */
+
+/* Over the table, not pushing it: it appears and vanishes as fast as a
+   checkbox is clicked. */
+:is(.sweet, .sweet-portal) .bulk-bar {
+  position: sticky;
+  bottom: 16px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 8px 10px;
+  border: 1px solid var(--rule);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(8, 21, 38, 0.08);
+}
+
+/* =============================================================== entrances */
+
+/* Decorative only, never blocking. 6px and a fade, 40ms apart. */
+@keyframes sweet-enter {
+  to { opacity: 1; transform: none; }
+}
+
+:is(.sweet, .sweet-portal) .enter {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: sweet-enter 280ms var(--ease) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.sweet, .sweet-portal) .enter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
